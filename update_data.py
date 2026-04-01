@@ -7,7 +7,7 @@ WHATSAPP_PHONE = os.getenv('WA_PHONE')
 WHATSAPP_API_KEY = os.getenv('WA_API_KEY')
 
 def send_whatsapp(message):
-    # 使用 quote 處理特殊字元與 Emoji
+    # 使用 quote 處理特殊字元、空格與 Emoji，確保傳送成功
     safe_msg = requests.utils.quote(message)
     url = f"https://api.callmebot.com/whatsapp.php?phone={WHATSAPP_PHONE}&text={safe_msg}&apikey={WHATSAPP_API_KEY}"
     response = requests.get(url)
@@ -28,16 +28,19 @@ def check_market():
     vix_data = yf.Ticker("^VIX").history(period="1d")
     vix = vix_data['Close'].iloc[-1]
     
+    # 在 GitHub Actions 的 Log 中顯示目前的數據（方便排查）
     print(f"SPX: {round(current_price)} | 200MA: {round(ma200)} | VIX: {round(vix, 2)}")
     
-    # 買入訊號邏輯
+    # 買入訊號邏輯：標普 500 低於 200 天線 且 VIX 大於或等於 30
     is_below_200ma = current_price < ma200
     is_panic_vix = vix >= 30
     
     if is_below_200ma and is_panic_vix:
-        msg = f"🚀【P股票】金色買入訊號！\n市場進入極度恐慌區\nSPX 已跌破 200MA\nVIX: {round(vix, 2)}"
+        msg = f"🚀【P股票】金色買入訊號！\n市場進入極度恐慌區\nSPX 已跌破 200MA\nVIX 目前為: {round(vix, 2)}"
         send_whatsapp(msg)
     else:
         print("未達買入門檻，保持耐心。")
 
 if __name__ == "__main__":
+    # 執行市場檢查
+    check_market()
