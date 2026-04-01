@@ -41,8 +41,3 @@ def check_market():
         print("未達買入門檻，保持耐心。")
 
 if __name__ == "__main__":
-    # --- 測試區：成功收到後可刪除下面這行 ---
-    send_whatsapp("🚀 測試成功！你的 GitHub 機器人已經連線到 WhatsApp 了。")
-    # ------------------------------------
-    
-    check_market()
