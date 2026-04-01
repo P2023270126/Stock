@@ -1,0 +1,25 @@
+name: Daily Stock Check
+
+on:
+  schedule:
+    - cron: '0 14 * * 1-5' # 每天香港時間晚上 10 點運行 (美股開盤後)
+  workflow_dispatch: # 允許你手動點擊按鈕測試
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install yfinance requests pandas
+
+      - name: Run script
+        run: python update_data.py
