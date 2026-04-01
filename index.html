@@ -1,0 +1,43 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>P股票 投資儀表板</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+            .card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 90%; max-width: 400px; text-align: center; }
+            h1 { color: #1c1e21; font-size: 22px; margin-bottom: 25px; }
+            .metric { margin: 15px 0; padding: 20px; border-radius: 15px; background: #f8f9fa; border: 1px solid #eee; }
+            .label { font-size: 14px; color: #606770; text-transform: uppercase; letter-spacing: 1px; }
+            .value { font-size: 32px; font-weight: 800; margin-top: 8px; }
+            .sub-value { font-size: 13px; margin-top: 5px; color: #90949c; }
+            .status-banner { padding: 12px; border-radius: 10px; color: white; font-weight: bold; margin-top: 25px; font-size: 16px; }
+            .footer { font-size: 11px; color: #bcc0c4; margin-top: 25px; }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <h1>📊 P股票 監控儀表板</h1>
+            
+            <div class="metric">
+                <div class="label">S&P 500 Index</div>
+                <div class="value" style="color: #e74c3c;">6528.52</div>
+                <div class="sub-value">200MA: 6638.86 (-1.66%)</div>
+            </div>
+
+            <div class="metric">
+                <div class="label">VIX Index (Fear)</div>
+                <div class="value" style="color: #2ecc71;">24.38</div>
+            </div>
+
+            <div class="status-banner" style="background: #e74c3c;">
+                ⚠️ 警告：進入買入觀察區
+            </div>
+
+            <div class="footer">Last Update: 2026-04-01 11:43:12 (UTC)</div>
+        </div>
+    </body>
+    </html>
+    
