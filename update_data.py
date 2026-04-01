@@ -36,6 +36,11 @@ def check_market():
         send_whatsapp(msg)
     else:
         print("未達買入門檻，保持耐心。")
+if __name__ == "__main__":
+    # --- 測試區：收到訊息後請刪除下面這一行 ---
+    send_whatsapp("🚀 恭喜！P股票機器人連線成功。目前的標普500與VIX數據已準備就緒。")
+    # ---------------------------------------
 
+    check_market()
 if __name__ == "__main__":
     check_market()
