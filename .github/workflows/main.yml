@@ -2,15 +2,14 @@ name: Daily Stock Check
 
 on:
   schedule:
-    # 每天世界時間 14:00 運行 (約香港時間晚上 10:00)
-    - cron: '0 14 * * 1-5'
-  # 允許手動點擊按鈕運行
+    # Weekdays after the US market close
+    - cron: '15 22 * * 1-5'
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    # 授予權限，讓 Actions 可以寫入檔案並更新網頁
+
     permissions:
       contents: write
 
@@ -21,27 +20,23 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.11'
+          cache: pip
 
       - name: Install dependencies
-        run: |
-          pip install yfinance requests pandas
+        run: pip install yfinance requests pandas
 
-      - name: Run script
+      - name: Consolidate market data and build dashboard
         env:
-          # 從 Secrets 傳入變數給 Python
           WA_PHONE: ${{ secrets.WA_PHONE }}
           WA_API_KEY: ${{ secrets.WA_API_KEY }}
         run: python update_data.py
 
-      - name: Commit and Push index.html
+      - name: Publish refreshed dashboard data
         run: |
-          # 設定 Git 使用者身份
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # 將生成的 HTML 檔案加入 Git 並推送到 GitHub
-          git add index.html
-          # 如果檔案沒有變動，commit 會報錯，所以加上 || exit 0 確保流程順暢
-          git commit -m "Update Dashboard [skip ci]" || exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html alert_state.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Update dashboard [skip ci]"
           git push
