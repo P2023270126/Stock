@@ -1,5 +1,5 @@
 {
   "bull_trap": false,
-  "extreme_oversold": true,
+  "extreme_oversold": false,
   "sos_recession": false
 }
